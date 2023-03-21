@@ -39,6 +39,10 @@ dependencies {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 tasks.withType(Test) {
     systemProperties(System.getProperties())
     useJUnitPlatform()
@@ -60,5 +64,11 @@ task android(type: Test) {
 task ios(type: Test) {
     useJUnitPlatform {
         includeTags 'ios'
+    }
+}
+
+task emulator(type: Test) {
+    useJUnitPlatform {
+        includeTags 'emulator'
     }
 }

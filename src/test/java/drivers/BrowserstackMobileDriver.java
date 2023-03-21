@@ -1,6 +1,7 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import config.MobileDriverConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
@@ -22,7 +23,7 @@ public class BrowserstackMobileDriver implements WebDriverProvider {
         mutableCapabilities.merge(capabilities);
         mutableCapabilities.setCapability("browserstack.user", config.getUser());
         mutableCapabilities.setCapability("browserstack.key", config.getKey());
-        mutableCapabilities.setCapability("app", config.getApp());
+        mutableCapabilities.setCapability("apps", config.getApp());
         mutableCapabilities.setCapability("device", config.getDevice());
         mutableCapabilities.setCapability("os_version", config.getVersion());
         mutableCapabilities.setCapability("project", config.getProject());

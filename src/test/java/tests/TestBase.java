@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 
 import drivers.BrowserstackMobileDriver;
+import drivers.LocalMobileDriver;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
@@ -19,9 +20,22 @@ public class TestBase {
 
     DateUtil dateUtil = new DateUtil();
 
+    public static String env = System.getProperty("env");
+
     @BeforeAll
     public static void setDriver() {
-        Configuration.browser = BrowserstackMobileDriver.class.getName();
+        switch (env) {
+            case "emulator":
+                Configuration.browser = LocalMobileDriver.class.getName();
+                break;
+            case "ios":
+            case "android":
+                Configuration.browser = BrowserstackMobileDriver.class.getName();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + env);
+        }
+
         Configuration.browserSize = null;
     }
 
@@ -36,6 +50,9 @@ public class TestBase {
         String sessionId = Selenide.sessionId().toString();
         Attach.pageSource();
         closeWebDriver();
-        Attach.addVideo(sessionId);
+
+        if (env.equals("android") || env.equals("ios")) {
+            Attach.addVideo(sessionId);
+        }
     }
 }

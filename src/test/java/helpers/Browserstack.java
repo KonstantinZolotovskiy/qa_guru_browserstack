@@ -1,6 +1,6 @@
 package helpers;
 
-import drivers.MobileDriverConfig;
+import config.MobileDriverConfig;
 import org.aeonbits.owner.ConfigFactory;
 
 import static helpers.CustomAllureListener.withCustomTemplates;
